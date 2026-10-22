@@ -7,13 +7,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { CustomQuestion } from "@/lib/db";
-import { POOL, type PoolQuestion } from "@/lib/data/questions";
+import { fullPool, type PoolQuestion } from "@/lib/data/questions";
 import { cn } from "@/lib/utils";
+
+/** Display names for the rotation's themes, in the order the sections appear. */
+const THEME_LABELS: Record<PoolQuestion["theme"], string> = {
+  gratitude: "Gratitude",
+  relationships: "Relationships",
+  work: "Work",
+  memory: "Memory",
+  "self-knowledge": "Self-knowledge",
+  "the day": "The day itself",
+};
+
+type Listed = PoolQuestion & { id?: string };
 
 /**
  * Questions: the whole rotation pool, grouped by theme, plus the visitor's own questions. Adding
- * one joins the rotation from tomorrow; Remove takes it back out. Fixed questions cannot be
- * removed — they are the rotation itself.
+ * one joins the rotation and can be drawn from the next night on; Remove takes it back out. Fixed
+ * questions cannot be removed — they are the rotation itself.
  */
 export function QuestionsTab({
   customQuestions,
@@ -22,35 +34,26 @@ export function QuestionsTab({
 }: {
   customQuestions: CustomQuestion[];
   onAdd: (text: string) => Promise<void>;
-  onRemove: (id: number) => Promise<void>;
+  onRemove: (id: string) => Promise<void>;
 }) {
   const [draft, setDraft] = useState("");
   const [problem, setProblem] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [removing, setRemoving] = useState<number | null>(null);
+  const [removing, setRemoving] = useState<string | null>(null);
 
   const customTexts = customQuestions.map((question) => question.text);
-  type Listed = PoolQuestion & { isCustom: boolean; id?: number };
-  const poolWithMark: Listed[] = [
-    ...POOL.map((question) => ({ ...question, isCustom: false })),
-    ...customQuestions.map((question) => ({
-      text: question.text,
-      theme: "Your own",
-      custom: true,
-      isCustom: true,
-      id: question.id,
-    })),
-  ];
+  const listed: Listed[] = fullPool(customTexts).map((question) => ({
+    ...question,
+    id: question.custom ? customQuestions.find((candidate) => candidate.text === question.text)?.id : undefined,
+  }));
 
-  const themes = new Map<string, { theme: string; items: Listed[] }>();
-  for (const question of poolWithMark) {
-    const bucket = themes.get(question.theme);
-    if (bucket) {
-      bucket.items.push(question);
-    } else {
-      themes.set(question.theme, { theme: question.theme, items: [question] });
-    }
-  }
+  const sections: { label: string; items: Listed[] }[] = [
+    ...Object.entries(THEME_LABELS).map(([theme, label]) => ({
+      label,
+      items: listed.filter((question) => !question.custom && question.theme === theme),
+    })),
+    { label: "Your own", items: listed.filter((question) => question.custom) },
+  ].filter((section) => section.items.length > 0);
 
   const submit = async () => {
     const text = draft.trim();
@@ -62,7 +65,7 @@ export function QuestionsTab({
       setProblem("Keep questions to 180 characters so they read well on the home page.");
       return;
     }
-    if (poolWithMark.some((question) => question.text.toLowerCase() === text.toLowerCase())) {
+    if (listed.some((question) => question.text.toLowerCase() === text.toLowerCase())) {
       setProblem("That question is already in the rotation.");
       return;
     }
@@ -76,7 +79,7 @@ export function QuestionsTab({
     }
   };
 
-  const remove = async (id: number) => {
+  const remove = async (id: string) => {
     setRemoving(id);
     try {
       await onRemove(id);
@@ -126,38 +129,38 @@ export function QuestionsTab({
         <CardHeader>
           <CardTitle className="text-base">The rotation</CardTitle>
           <CardDescription>
-            {POOL.length} questions on rotation{customQuestions.length ? `, plus ${customQuestions.length} of your own` : ""} — one
-            drawn each evening.
+            {listed.length} questions in the pool{customQuestions.length ? `, ${customQuestions.length} of them yours` : ""} —
+            one drawn each evening.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {[...themes.values()].map((bucket) => (
-            <section key={bucket.theme} className="space-y-2" aria-label={bucket.theme}>
-              <h3 className="text-sm font-semibold text-muted-foreground">{bucket.theme}</h3>
+          {sections.map((section) => (
+            <section key={section.label} className="space-y-2" aria-label={section.label}>
+              <h3 className="text-sm font-semibold text-muted-foreground">{section.label}</h3>
               <ul className="space-y-2">
-                {bucket.items.map((question) => (
+                {section.items.map((question) => (
                   <li
                     key={question.text}
                     className={cn(
                       "flex items-start justify-between gap-3 rounded-lg border bg-card p-3",
-                      question.isCustom && "border-dashed",
+                      question.custom && "border-dashed",
                     )}
                   >
-                    <div className="min-w-0 space-y-1">
+                    <div className="min-w-0 space-y-1.5">
                       <p className="text-sm leading-snug">{question.text}</p>
-                      {question.isCustom ? (
+                      {question.custom ? (
                         <Badge variant="secondary" className="text-[10px]">
                           Yours
                         </Badge>
                       ) : null}
                     </div>
-                    {question.isCustom && question.id !== undefined ? (
+                    {question.custom && question.id !== undefined ? (
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
                         disabled={removing === question.id}
-                        onClick={() => void remove(question.id as number)}
+                        onClick={() => void remove(question.id as string)}
                       >
                         {removing === question.id ? "Removing…" : "Remove"}
                       </Button>
