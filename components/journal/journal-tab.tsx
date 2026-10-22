@@ -319,6 +319,3 @@ function WeeklySummary({ today, entries }: { today: string; entries: JournalEntr
     </Card>
   );
 }
-
-// WeekBucket is only shaped here; keep the import honest if the type grows.
-export type { WeekBucket };
