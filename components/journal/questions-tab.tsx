@@ -151,22 +151,16 @@ export function QuestionsTab({
                         </Badge>
                       ) : null}
                     </div>
-                    {question.isCustom && "id" in question ? null : null}
-                    {question.isCustom ? (
-                      (() => {
-                        const custom = customQuestions.find((candidate) => candidate.text === question.text);
-                        return custom ? (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            disabled={removing === custom.id}
-                            onClick={() => void remove(custom.id)}
-                          >
-                            {removing === custom.id ? "Removing…" : "Remove"}
-                          </Button>
-                        ) : null;
-                      })()
+                    {question.isCustom && question.id !== undefined ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        disabled={removing === question.id}
+                        onClick={() => void remove(question.id as number)}
+                      >
+                        {removing === question.id ? "Removing…" : "Remove"}
+                      </Button>
                     ) : null}
                   </li>
                 ))}
