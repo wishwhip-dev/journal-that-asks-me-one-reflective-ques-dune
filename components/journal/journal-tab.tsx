@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AI_PRIVACY_NOTE, useAsk } from "@/lib/ai";
 import type { JournalEntry } from "@/lib/db";
-import { currentStreak, weekEntries, answersPerWeek } from "@/lib/data/journal";
+import { countJournaled, currentStreak, weekEntries, answersPerWeek } from "@/lib/data/journal";
 import { questionForDate } from "@/lib/data/questions";
 import { formatDate, formatShort, lastDays, weekdayInitial } from "@/lib/data/dates";
 import { WeekChart } from "@/components/journal/week-chart";
