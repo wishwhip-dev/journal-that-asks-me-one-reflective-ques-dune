@@ -138,18 +138,6 @@ export function fullPool(customTexts: readonly string[]): PoolQuestion[] {
  */
 export function questionForDate(date: string, customTexts: readonly string[]): PoolQuestion {
   const pool = fullPool(customTexts);
-  const index = ((dayNumberOf(date) % pool.length) + pool.length) % pool.length;
+  const index = ((dayNumber(date) % pool.length) + pool.length) % pool.length;
   return pool[index] ?? { text: "What is on your mind tonight?", theme: "the day", custom: false };
-}
-
-/** Days since 1970-01-01 for a local calendar date like "2026-02-21". Whole days, no timezones. */
-export function dayNumberOf(date: string): number {
-  const [year, month, day] = date.split("-").map(Number);
-  return Math.round(Date.UTC(year, (month ?? 1) - 1, day ?? 1) / 86_400_000);
-}
-
-/** The inverse: "20211" → "2026-02-21". */
-export function dateFromDayNumber(number: number): string {
-  const date = new Date(number * 86_400_000);
-  return date.toISOString().slice(0, 10);
 }
