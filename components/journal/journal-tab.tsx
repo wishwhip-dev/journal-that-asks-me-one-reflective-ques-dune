@@ -151,32 +151,32 @@ function SevenDayStrip({
   const days = useMemo(() => lastDays(7, today), [today]);
   const answered = useMemo(() => new Set(entries.map((entry) => entry.date)), [entries]);
   return (
-    <div className="grid grid-cols-7 gap-1.5" role="list" aria-label="The last seven days">
+    <ul className="grid grid-cols-7 gap-1.5" aria-label="The last seven days">
       {days.map((date) => {
         const isAnswered = answered.has(date);
         const dayOfMonth = Number(date.slice(8, 10));
         return (
-          <button
-            key={date}
-            type="button"
-            role="listitem"
-            onClick={() => onOpen(date)}
-            aria-label={`${formatDate(date, Number(today.slice(0, 4)))}${isAnswered ? " — answered" : " — no answer yet"}`}
-            aria-current={date === today ? "date" : undefined}
-            className={cn(
-              "flex min-h-12 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg border px-0.5 py-1 text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              isAnswered
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-              date === today && !isAnswered && "border-dashed",
-            )}
-          >
-            <span className="text-[10px] uppercase tracking-wide opacity-80">{weekdayInitial(date)}</span>
-            <span className="text-sm font-semibold leading-none">{dayOfMonth}</span>
-          </button>
+          <li key={date}>
+            <button
+              type="button"
+              onClick={() => onOpen(date)}
+              aria-label={`${formatDate(date, Number(today.slice(0, 4)))}${isAnswered ? " — answered" : " — no answer yet"}`}
+              aria-current={date === today ? "date" : undefined}
+              className={cn(
+                "flex min-h-12 w-full min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg border px-0.5 py-1 text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                isAnswered
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                date === today && !isAnswered && "border-dashed",
+              )}
+            >
+              <span className="text-[10px] uppercase tracking-wide opacity-80">{weekdayInitial(date)}</span>
+              <span className="text-sm font-semibold leading-none">{dayOfMonth}</span>
+            </button>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }
 
