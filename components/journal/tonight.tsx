@@ -96,8 +96,6 @@ export function Tonight({
       {!answering && entry ? (
         <p className="text-xs text-muted-foreground">Saved in this browser — it will still be here tomorrow.</p>
       ) : null}
-
-      {entry ? <span className="hidden"><Badge>answered</Badge></span> : null}
     </div>
   );
 }
