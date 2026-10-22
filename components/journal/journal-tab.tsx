@@ -181,7 +181,7 @@ function SevenDayStrip({
 }
 
 function StatsCard({ today, entries }: { today: string; entries: JournalEntry[] }) {
-  const total = entries.length;
+  const total = countJournaled(entries);
   const streak = currentStreak(entries, today);
   const weeks = useMemo(() => answersPerWeek(entries, today, 12), [entries, today]);
   const chartData = weeks.map((bucket) => ({ label: formatShort(bucket.start), answers: bucket.count }));
