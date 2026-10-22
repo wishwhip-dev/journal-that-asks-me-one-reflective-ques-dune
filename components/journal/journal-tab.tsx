@@ -215,10 +215,6 @@ function StatsCard({ today, entries }: { today: string; entries: JournalEntry[] 
   );
 }
 
-function countJournaledSafe(entries: JournalEntry[]): number {
-  return entries.length;
-}
-
 function EntryRow({
   entry,
   thisYear,
