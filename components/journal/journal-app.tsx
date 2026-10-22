@@ -34,13 +34,13 @@ export function JournalApp() {
   }
 
   // Everything below runs only in the browser, after hydration: reading the clock here is safe.
-  const today = dayKeyToday();
-  const entries = entriesState.data ?? [];
-  const customQuestions = customState.data ?? [];
+  const today = todayISO();
+  const entries = state.data?.entries ?? [];
+  const customQuestions = state.data?.customQuestions ?? [];
 
   const saveAnswer = async (date: string, question: string, answer: string) => {
     try {
-      await putEntry(database.db, { date, question, answer });
+      await saveEntry({ date, question, answer, updatedAt: Date.now() });
       toast.success(date === today ? "Saved. Sleep well." : `Saved for ${date}.`);
     } catch (error) {
       console.error("Failed to save the entry", error);
@@ -52,7 +52,7 @@ export function JournalApp() {
 
   const removeEntry = async (entry: { date: string }) => {
     try {
-      await deleteEntry(database.db, entry.date);
+      await deleteEntry(entry.date);
       toast.success("Entry deleted.");
     } catch (error) {
       console.error("Failed to delete the entry", error);
@@ -62,7 +62,7 @@ export function JournalApp() {
 
   const addQuestion = async (text: string) => {
     try {
-      await addCustomQuestion(database.db, text);
+      await addCustomQuestion(text);
       toast.success("Added to the rotation — it can be drawn from tomorrow.");
     } catch (error) {
       console.error("Failed to add the question", error);
@@ -70,9 +70,9 @@ export function JournalApp() {
     }
   };
 
-  const removeQuestion = async (id: number) => {
+  const removeQuestion = async (id: string) => {
     try {
-      await removeCustomQuestion(database.db, id);
+      await removeCustomQuestion(id);
       toast.success("Question removed from the rotation.");
     } catch (error) {
       console.error("Failed to remove the question", error);
