@@ -24,24 +24,25 @@ export function QuestionsTab({
   onAdd: (text: string) => Promise<void>;
   onRemove: (id: number) => Promise<void>;
 }) {
-  const thisYear = new Date().getFullYear(); // render-time only after hydration gate; used as fallback year
   const [draft, setDraft] = useState("");
   const [problem, setProblem] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [removing, setRemoving] = useState<number | null>(null);
 
   const customTexts = customQuestions.map((question) => question.text);
-  const poolWithMark: (PoolQuestion & { isCustom: boolean })[] = [
+  type Listed = PoolQuestion & { isCustom: boolean; id?: number };
+  const poolWithMark: Listed[] = [
     ...POOL.map((question) => ({ ...question, isCustom: false })),
     ...customQuestions.map((question) => ({
       text: question.text,
       theme: "Your own",
       custom: true,
       isCustom: true,
+      id: question.id,
     })),
   ];
 
-  const themes = new Map<string, { theme: string; items: (PoolQuestion & { isCustom: boolean })[] }>();
+  const themes = new Map<string, { theme: string; items: Listed[] }>();
   for (const question of poolWithMark) {
     const bucket = themes.get(question.theme);
     if (bucket) {
