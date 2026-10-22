@@ -14,6 +14,7 @@
         "docs/components.md",
         "docs/storage.md",
         "docs/notifications.md",
+        "docs/charts.md",
         "docs/share.md",
         "docs/sync.md",
         "docs/home-screen.md",
@@ -35,6 +36,11 @@
       ],
       "docs": "docs/storage.md"
     },
+    "charts": {
+      "kind": "recharts",
+      "component": "components/ui/chart.tsx",
+      "docs": "docs/charts.md"
+    },
     "share": true,
     "sync": true,
     "install": true
@@ -51,13 +57,14 @@
       "sync",
       "home-screen",
       "visits",
-      "attribution"
+      "attribution",
+      "charts"
     ],
     "supervisorRevision": "templates-2da22b4141cdb4ea",
     "storageVersion": "0.4.0",
     "files": {
       ".gitignore": "73ec7442d8e321919c3d0eb5a2fc8f11fbcbf1096ec76b3f9f5e54f6a19a198a",
-      "AGENTS.md": "ba5597a4b67e4ee229ce3e96031ce1f52e36344ca7c91f849b5260ae703a743a",
+      "AGENTS.md": "18bf98544b295f4e3549767c29ab299eda70cef54cddbb332e4c0fa550d8f841",
       "README.md": "950997c80f1549d90d5ec9b93a358c70b0752ab56c52927312b94af7554f9262",
       "app/apple-icon.tsx": "a2197fa82db26e6f99b3542ad4cf0edd07401a838937b0fa2514ff4306ea6f88",
       "app/globals.css": "67a04f644d8787c1521d6977e303e4abb76508f4e6e8acba8dd3021f310cbe6b",
@@ -78,6 +85,7 @@
       "components/ui/badge.tsx": "dab689d836ad3292b41e7f4986b4e68e5d45c6903e4aeaae8972a82d4aebec29",
       "components/ui/button.tsx": "c2b999a96781e6c932632bd089095368e973bf5602e1b1a62156b7d2b43f1e84",
       "components/ui/card.tsx": "525c4bb2c051987be64df0e92e1d90174912b219bf541e24ffbc4a3406de49e8",
+      "components/ui/chart.tsx": "2d7c4634b85fbd0bbe0c4636d0d333e02398fa49ad70fd24eece5853dc3975cc",
       "components/ui/checkbox.tsx": "c9e19d480a43172f9504ac9b22f4a9c149de1d916162f24c62395533b7be19f6",
       "components/ui/dialog.tsx": "3f273268ea1be25436da78b89286b6ce7cb80b04b61e82efd19049fa86ca90be",
       "components/ui/input.tsx": "6299a6a387dc55e528aec4342deaea0b83f1ea3a365c135a31a18ee55334f441",
@@ -90,7 +98,8 @@
       "components/ui/textarea.tsx": "ec7c92aaed80f6923a7caa4bfe4eead395b50a7001504fd7fbb0b9381804dae9",
       "components/visit-beacon.tsx": "97937b7fff1cad387b5ff2a0066195f090b90063638715fc86f4eb0c656a3156",
       "docs/attribution.md": "dc23d7ac4a2c0ae0c922fd55bc8808dc3f74109d46dfb55f1252daafa37bb23b",
-      "docs/components.md": "0e50d0ac0530452fe688e6035fc409c59b82ca2af23da3277988d2e42087930c",
+      "docs/charts.md": "e2b951d5c56712a86fd41577f37bbd0671df67842b75e6a6fa02c07bcfcf2f03",
+      "docs/components.md": "b979fbc82900f112c9c08bdfe0291349618e02c253a3b5e98ccce77e6bc14d18",
       "docs/home-screen.md": "1af011d1360306cba03d81055afc4f9024b73e91d8b036762a1d49835d1087b2",
       "docs/notifications.md": "db1fa3c690a0c35332bcc15f274f08bc17081a8916b3512218927d1e49146f3d",
       "docs/share.md": "15bbcf08dc2cbf9bed5abd6a782a56fd9afaef4dc33bd79f533dc27367890b2f",

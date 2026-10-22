@@ -17,7 +17,7 @@ A request that needs one of these is outside what this project can deliver as it
 
 ## Stack
 
-Next.js App Router · TypeScript · Tailwind CSS · shadcn/ui · 14 shadcn/ui components pre-installed (dialog, select, table, card, form inputs, tabs, alert) · Dexie (browser database, device-local) · Sonner (toast notifications, already mounted) · Web Share (ShareButton and lib/share.ts: a result drawn to an image and shared or saved, a link shared or copied) · Home screen and offline (public/sw.js).
+Next.js App Router · TypeScript · Tailwind CSS · shadcn/ui · 14 shadcn/ui components pre-installed (dialog, select, table, card, form inputs, tabs, alert) · Dexie (browser database, device-local) · Sonner (toast notifications, already mounted) · Recharts (themed chart components, already wired to the palette) · Web Share (ShareButton and lib/share.ts: a result drawn to an image and shared or saved, a link shared or copied) · Home screen and offline (public/sw.js).
 
 ## Layout
 
@@ -35,6 +35,7 @@ components.json              shadcn config: new-york, neutral, rsc, aliases @/co
 lib/storage/                 the shared storage package, vendored in. Do NOT edit; see docs/storage.md.
 lib/db.ts                    THIS app's database schema. Tables, indexes, versions. Edit this.
 lib/data/<name>.ts           THIS app's queries. Components call these, never Dexie directly. Create it.
+components/ui/chart.tsx      the Recharts wrapper. Import from it; do not edit it.
 components/share-button.tsx  the share control, with its outcome shown as text. Use it; do not call navigator.share.
 lib/share.ts                 draw a share card, share or save an image, share or copy a link.
 ```
@@ -57,6 +58,7 @@ cannot do as well as what it can.
 - **Component kit.** 14 shadcn/ui components, the design tokens they need, and the cn() helper. Read `docs/components.md` before building on it.
 - **Browser storage.** Dexie over IndexedDB, already set up: schemas, seeding, live queries and export/import. Data lives in one browser on one device — no sync, no sharing between visitors, no server copy. Read `docs/storage.md` before building on it.
 - **Toast notifications.** Sonner toasts, mounted and ready. Call toast() from anywhere on the client. Read `docs/notifications.md` before building on it.
+- **Charts.** Recharts, wrapped and themed as `ChartContainer`. Series colours follow the project's palette. Read `docs/charts.md` before building on it.
 - **Sharing.** Share a result as an image sized for stories, posts or link previews, or share a link, with a save or copy fallback where the device has no share sheet. Read `docs/share.md` before building on it.
 - **Move to another device.** The app's data moved to another device once, encrypted, with a code that lasts a day. Photos stay. Read `docs/sync.md` before building on it.
 - **Home screen.** Installs on a phone's home screen and opens offline after one visit. Already mounted; never edit public/sw.js or add another service worker or install prompt. Read `docs/home-screen.md` before building on it.
