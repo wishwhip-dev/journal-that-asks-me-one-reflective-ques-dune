@@ -20,8 +20,7 @@ import { QuestionsTab } from "@/components/journal/questions-tab";
  */
 export function JournalApp() {
   const ready = useIsHydrated();
-  const entriesState = useStoredQuery(database, () => loadAllEntries(), []);
-  const customState = useStoredQuery(database, () => loadCustomQuestions(), []);
+  const state = useStoredQuery(database, () => loadJournalData(), []);
   const status = useStorageStatus(database);
 
   if (!ready) {
