@@ -25,9 +25,15 @@ export function WeekChart({ data }: { data: WeekDatum[] }) {
           axisLine={false}
           interval={1}
           tickMargin={6}
-          tickFontSize={11}
+          tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
         />
-        <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={34} tickFontSize={11} />
+        <YAxis
+          allowDecimals={false}
+          tickLine={false}
+          axisLine={false}
+          width={34}
+          tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+        />
         <ChartTooltip content={<ChartTooltipContent />} />
         <Bar dataKey="answers" fill="var(--color-answers)" radius={[4, 4, 0, 0]} isAnimationActive={false} />
       </BarChart>
