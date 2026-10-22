@@ -4,7 +4,6 @@ import { useState } from "react";
 import { MoonStar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { AnswerForm } from "@/components/journal/answer-form";
 import { EntryShare } from "@/components/journal/entry-share";
 import type { JournalEntry } from "@/lib/db";
