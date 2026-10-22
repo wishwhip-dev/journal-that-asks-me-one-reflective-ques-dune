@@ -14,9 +14,17 @@ Goal: A journal that asks me one reflective question each evening and saves my a
 10. The Questions tab lists the full rotation pool, offers a labelled Add question form whose submissions join the rotation, and gives each custom question a Remove button that takes it back out.
 11. A search box in the Journal tab narrows the entries to those whose question or answer contains the typed text; when nothing matches the list is replaced by a message saying so, and clearing the box brings the whole list back.
 12. Pressing Share on a journal entry offers to share or save an image card of that day's question and answer, and nothing is shared unless the button is pressed.
-13. The whole flow works from the keyboard: Tab reaches every control on the home page in order, and Ctrl+Enter in the answer box saves the entry.
-14. At phone width the home page and Journal tab fit without horizontal scrolling, with the question, form, streak readout and entries all readable and tap targets at least 32px.
+13. Pressing a Weekly summary button in the Journal tab asks the assistant for a gentle summary drawn from that week's saved answers and shows the summary as text under the button; while it is being written a message says it is thinking, and if the assistant is unavailable a message says so — the rest of the app works normally without pressing it.
+14. The whole flow works from the keyboard: Tab reaches every control on the home page in order, and Ctrl+Enter in the answer box saves the entry.
+15. At phone width the home page and Journal tab fit without horizontal scrolling, with the question, form, streak readout and entries all readable and tap targets at least 32px.
 
 These are the outcomes this task is judged against.
 
-Uses: charts
+Uses: charts and AI
+
+## The owner's answers
+
+- Q: An AI helper could offer a gentle summary of the week's reflections drawn from the saved answers. Add it?
+  A: Add AI
+
+Build to these answers; they override any assumption the plan made.
