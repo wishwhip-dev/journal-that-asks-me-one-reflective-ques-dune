@@ -17,14 +17,6 @@ export async function listEntries(): Promise<JournalEntry[]> {
   return rows.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }
 
-export async function getEntry(date: string): Promise<JournalEntry | undefined> {
-  return (await entries()).get(date);
-}
-
-export async function getEntries(): Promise<JournalEntry[]> {
-  return listEntries();
-}
-
 /** Write (or overwrite — the primary key is the date) one day's entry. */
 export async function saveEntry(entry: JournalEntry): Promise<void> {
   await (await entries()).put(entry);
