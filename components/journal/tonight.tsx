@@ -48,7 +48,7 @@ export function Tonight({
       <header className="space-y-3">
         <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           <MoonStar className="size-4" aria-hidden="true" />
-          Tonight · {formatDate(today, new Date().getFullYear())}
+          Tonight · {formatDate(today, Number(today.slice(0, 4)))}
         </p>
         <h1 className="text-balance text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
           {question.text}
